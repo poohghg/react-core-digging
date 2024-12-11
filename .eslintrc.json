@@ -1,7 +1,18 @@
 {
+  "plugins": [
+    "prettier",
+    "@typescript-eslint",
+    "react",
+    "jsx-a11y",
+    "react-hooks"
+  ],
   "extends": [
+    "prettier",
     "eslint:recommended",
-    "prettier"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
     "no-console": "warn",
