@@ -2,16 +2,17 @@ declare module 'myReact' {
 	type Element = string | ((props: Props) => ReactElement)
 
 	interface Props {
-		key?: string
-
 		[key: string]: any
 	}
 
-	interface ReactElement<T extends string = string, P = any> {
+	interface ReactElement<T extends Element, P = any> {
 		type: T
-		props?: P
-		children?: any[]
-		key?: string
+		props: P
+		key: string | null
+	}
+
+	type ReactElementProps<T extends Props> = Omit<T, 'key'> & {
+		children?: ReactElement[]
 	}
 
 	// function createElement<T extends Element, P extends Props>(
