@@ -1,11 +1,13 @@
 declare module 'myReact' {
-	type Element = string | ((props: Props) => ReactElement)
+	type Component = (props: Props) => ReactElement
+
+	type ElementType = string | Component
 
 	interface Props {
 		[key: string]: any
 	}
 
-	interface ReactElement<T extends Element, P = any> {
+	interface ReactElement<T extends ElementType, P = any> {
 		type: T
 		props: P
 		key: string | null

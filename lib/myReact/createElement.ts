@@ -1,29 +1,59 @@
 // lib/myReact/createElement.ts
-import {Element, Props, ReactElement, ReactElementProps} from 'myReact' //https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
+import {ElementType, Props, ReactElement, ReactElementProps} from 'myReact'
+import ELEMENT_TYPE from './constant/ELEMENT_TYPE.ts'
 
 //https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
-export default function createElement<T extends Element, P extends Props>(
-	type: T,
-	config?: P | null,
-	...children: any[]
-): ReactElement<T, ReactElementProps<P>> {
-	// config 의 key 를 제거한 새로운 props 를 만든다.
-	const key = config?.key
-	delete config?.key
 
-	const newProps = {
-		...((config || {}) as P),
-		children: children.length === 1 ? children[0] : children,
+class NewProps<T extends Props> {
+	constructor(
+		private config: T | null | undefined,
+		private children: any[],
+	) {}
+
+	get props() {
+		const newProps = {
+			...(this.config as T),
+			children: this.createChildren(),
+		}
+
+		delete newProps?.key
+
+		return newProps
 	}
 
-	// type 이 function 이면 type 을 실행한 결과를 반환한다.
+	private createChildren() {
+		return this.children.map((child) => {
+			return typeof child === 'object' ? child : this.createTextElement(child)
+		})
+	}
+
+	private createTextElement(text: string | number) {
+		return {
+			type: ELEMENT_TYPE.TEXT_ELEMENT,
+			props: {
+				nodeValue: text.toString(),
+				children: [],
+			},
+		}
+	}
+}
+
+//https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
+export default function createElement<P extends Props>(
+	type: ElementType,
+	config?: P | null,
+	...children: any[]
+): ReactElement<ElementType, ReactElementProps<P>> {
 	if (typeof type === 'function') {
-		return type(newProps)
+		return type({
+			...config,
+			children,
+		})
 	}
 
 	return {
-		type: type,
-		props: newProps,
-		key: key,
+		type,
+		props: new NewProps(config, children).props,
+		key: config?.key,
 	}
 }
