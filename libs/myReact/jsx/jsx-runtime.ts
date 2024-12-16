@@ -1,9 +1,7 @@
-// lib/myReact/createElement.ts
-import {ElementType, Props, ReactElement, ReactElementProps} from 'myReact'
-import ELEMENT_TYPE from './constant/ELEMENT_TYPE.ts'
+import ELEMENT_TYPE from '../constant/ELEMENT_TYPE'
+import type {ElementType, Props, ReactElement, ReactElementProps,} from '../type'
 
 //https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
-
 class NewProps<T extends Props> {
 	constructor(
 		private config: T | null | undefined,
@@ -22,9 +20,17 @@ class NewProps<T extends Props> {
 	}
 
 	private createChildren() {
-		return this.children.map((child) => {
-			return typeof child === 'object' ? child : this.createTextElement(child)
-		})
+		return this.children.length === 1
+			? this.makeChild(this.children[0])
+			: this.children.map((child) => this.makeChild(child))
+	}
+
+	private makeChild(child: any) {
+		if (child === null || child === undefined) return null
+
+		return typeof child === 'object' && !Array.isArray(child)
+			? child
+			: this.createTextElement(child)
 	}
 
 	private createTextElement(text: string | number) {
@@ -32,18 +38,16 @@ class NewProps<T extends Props> {
 			type: ELEMENT_TYPE.TEXT_ELEMENT,
 			props: {
 				nodeValue: text.toString(),
-				children: [],
 			},
 		}
 	}
 }
 
-//https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
-export default function createElement<P extends Props>(
+export function createElement<P extends Props>(
 	type: ElementType,
 	config?: P | null,
 	...children: any[]
-): ReactElement<ElementType, ReactElementProps<P>> {
+): ReactElement<ReactElementProps<P>> {
 	if (typeof type === 'function') {
 		return type({
 			...config,

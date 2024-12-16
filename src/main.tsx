@@ -1,5 +1,3 @@
-import React from 'myReact'
-
 const App = () => {
 	const testClickHandler = () => {
 		console.log('test')
@@ -14,7 +12,8 @@ const App = () => {
 }
 
 console.log(
-	<div key={'test'} test={1}>
+	<div>
 		<App />
+		<div>2</div>
 	</div>,
 )
