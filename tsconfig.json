@@ -24,16 +24,20 @@
     // custom-react
     // https://www.typescriptlang.org/ko/docs/handbook/jsx.html
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "myReact": [
-        "lib/myReact"
+      "@/*": [
+        "./*"
+      ],
+      "@myReact": [
+        "./libs/myReact/*"
       ]
     }
   },
   "include": [
     "src",
-    "types"
+    "types",
+    "libs/myReact/types"
   ]
 }
