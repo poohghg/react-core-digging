@@ -1,3 +1,5 @@
+import { render } from '@/libs/myReact'
+
 const App = () => {
 	const testClickHandler = () => {
 		console.log('test')
@@ -5,15 +7,23 @@ const App = () => {
 
 	return (
 		<div>
-			<button onclick={testClickHandler}>1</button>
+			<button className={'test'} onclick={testClickHandler}>
+				1
+			</button>
 			<button>2</button>
 		</div>
 	)
 }
 
-console.log(
-	<div>
-		<App />
-		<div>2</div>
-	</div>,
-)
+const app = (() => {
+	const root = document.getElementById('app')
+
+	if (root) return root
+
+	const div = document.createElement('div')
+	div.id = 'app'
+
+	return document.body.appendChild(div)
+})()
+
+render(<App />, app)
