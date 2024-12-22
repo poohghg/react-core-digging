@@ -1,7 +1,7 @@
 import { ReactElement } from './type'
 import ELEMENT_TYPE from './constant/ELEMENT_TYPE'
 
-export function render(element: ReactElement, container: HTMLElement) {
+export default function render(element: ReactElement, container: HTMLElement) {
 	const dom = new DomNode(element).createDomNode()
 	container.appendChild(dom)
 }
