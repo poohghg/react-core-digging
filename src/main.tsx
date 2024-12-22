@@ -1,14 +1,16 @@
-import { render } from '@/libs/myReact'
+import { render, useState } from '@/libs/myReact'
 
 const App = () => {
-	const testClickHandler = () => {
-		console.log('test')
+	const [count, setCount] = useState(0)
+
+	const handleClick = () => {
+		setCount((prev) => prev + 1)
 	}
 
 	return (
 		<div>
-			<button className={'test'} onclick={testClickHandler}>
-				1
+			<button className={'test'} onclick={handleClick}>
+				{count}
 			</button>
 			<button>2</button>
 		</div>

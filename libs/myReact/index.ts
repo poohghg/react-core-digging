@@ -1,4 +1,5 @@
 import { createElement } from './jsx/jsx-runtime'
-import { render } from './render'
+import render from './render'
+import useState from './useState.ts'
 
-export { createElement, createElement as jsx, render }
+export { createElement, render, useState }
