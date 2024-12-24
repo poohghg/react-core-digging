@@ -1,5 +1,10 @@
 import ELEMENT_TYPE from '../constant/ELEMENT_TYPE'
-import type {ElementType, Props, ReactElement, ReactElementProps,} from '../type'
+import type {
+	ElementType,
+	Props,
+	ReactElement,
+	ReactElementProps,
+} from '../type'
 
 //https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
 class NewProps<T extends Props> {
