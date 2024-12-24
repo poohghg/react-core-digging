@@ -1,9 +1,13 @@
+import rerender from '@/libs/myReact/rerender.tsx'
+
+type UpdaterFunction<T> = (prevState: T) => T
+
 let currentStateIndex = 0
-const states: any[] = []
+const states: unknown[] = []
 
 export default function useState<T>(
 	initialState: T,
-): [T, (newState: T | ((prevState: T) => T)) => void] {
+): [T, (newState: T | UpdaterFunction<T>) => void] {
 	const stateIndex = currentStateIndex
 	currentStateIndex++
 
@@ -11,19 +15,19 @@ export default function useState<T>(
 		states[stateIndex] = initialState
 	}
 
-	const setState = (newState: T | ((prevState: T) => T)) => {
+	const setState = (newState: T | UpdaterFunction<T>) => {
 		if (typeof newState === 'function') {
-			states[stateIndex] = (newState as (prevState: T) => T)(states[stateIndex])
+			const updaterFunction = newState as UpdaterFunction<T>
+			states[stateIndex] = updaterFunction(states[stateIndex] as T)
 		} else {
 			states[stateIndex] = newState
 		}
-		rerender()
+
+		queueMicrotask(() => {
+			currentStateIndex = 0
+			rerender()
+		})
 	}
 
-	return [states[stateIndex], setState]
-}
-
-function rerender() {
-	currentStateIndex = 0
-	console.log('Component re-rendered!')
+	return [states[stateIndex] as T, setState]
 }
