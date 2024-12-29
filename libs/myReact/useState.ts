@@ -1,4 +1,4 @@
-import rerender from '@/libs/myReact/rerender'
+import { rerender } from '@/libs/myReact/render.ts'
 
 type UpdaterFunction<T> = (prevState: T) => T
 

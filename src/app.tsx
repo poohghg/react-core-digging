@@ -1,9 +1,9 @@
-import Index from '@/src/component/Todo'
+import Todo from '@/src/component/Todo'
 
 function App() {
 	return (
 		<div>
-			<Index />
+			<Todo />
 		</div>
 	)
 }
