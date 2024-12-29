@@ -1,7 +1,7 @@
-import { ReactElement } from './model/type.ts'
-import diff from '@/libs/myReact/diff.ts'
-import App from '@/src/app.tsx'
-import { runEffects } from '@/libs/myReact/useEffect.ts'
+import { ReactElement } from './model/type'
+import diff from '@/libs/myReact/diff'
+import App from '@/src/app'
+import { runEffects } from '@/libs/myReact/useEffect'
 
 let oldElement: ReactElement | null = null
 let rootContainer: HTMLElement | null = null

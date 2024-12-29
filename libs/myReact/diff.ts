@@ -1,5 +1,5 @@
-import { ReactElement } from './model/type.ts'
-import DomNode from '@/libs/myReact/model/DonNde.ts'
+import { ReactElement } from './model/type'
+import DomNode from '@/libs/myReact/model/DonNde'
 
 export default function diff(
 	container: HTMLElement,

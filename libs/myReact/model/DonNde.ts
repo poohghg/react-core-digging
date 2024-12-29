@@ -1,5 +1,5 @@
-import { ReactElement } from '@/libs/myReact/model/type.ts'
-import ELEMENT_TYPE from '@/libs/myReact/constant/ELEMENT_TYPE.ts'
+import { ReactElement } from '@/libs/myReact/model/type'
+import ELEMENT_TYPE from '@/libs/myReact/constant/ELEMENT_TYPE'
 
 export default class DomNode {
 	constructor(private element: ReactElement) {}
