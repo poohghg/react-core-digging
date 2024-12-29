@@ -1,4 +1,4 @@
-import Counter from '@/src/Counter.tsx'
+import Counter from '@/src/Counter'
 
 function App() {
 	return (

@@ -1,10 +1,10 @@
-export const getApp = (id: string = 'app') => {
-	const root = document.getElementById(id)
+export const getContainer = (id: string = 'app') => {
+  const root = document.getElementById(id)
 
-	if (root) return root
+  if (root) return root
 
-	const div = document.createElement('div')
-	div.id = id
+  const div = document.createElement('div')
+  div.id = id
 
-	return document.body.appendChild(div)
+  return document.body.appendChild(div)
 }

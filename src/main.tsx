@@ -1,5 +1,5 @@
 import { render } from '@/libs/myReact'
-import App from '@/src/app.tsx'
-import { getApp } from '@/libs/myReact/libs/utils.ts'
+import App from '@/src/app'
+import { getContainer } from '@/libs/myReact/libs/utils'
 
-render(<App />, getApp())
+render(<App />, getContainer())
