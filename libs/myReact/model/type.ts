@@ -7,11 +7,15 @@ export interface Props {
 }
 
 export interface ReactElement<P = any> {
-	type: ElementType
-	props: P
 	key: string | null
+	type: ElementType
+	props: P & {
+		children?: ReactElement[]
+	}
 }
 
 export type ReactElementProps<T extends Props> = Omit<T, 'key'> & {
 	children?: ReactElement[]
 }
+
+export type UpdaterFunction<T> = (prevState: T) => T

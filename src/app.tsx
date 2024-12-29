@@ -1,9 +1,9 @@
-import Counter from '@/src/Counter'
+import Index from '@/src/component/Todo'
 
 function App() {
 	return (
 		<div>
-			<Counter />
+			<Index />
 		</div>
 	)
 }

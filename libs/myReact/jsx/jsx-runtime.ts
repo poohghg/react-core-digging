@@ -1,10 +1,5 @@
 import ELEMENT_TYPE from '../constant/ELEMENT_TYPE'
-import type {
-	ElementType,
-	Props,
-	ReactElement,
-	ReactElementProps,
-} from '../type'
+import type {ElementType, Props, ReactElement, ReactElementProps,} from '../model/type.ts'
 
 //https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElement.js#L161
 class NewProps<T extends Props> {
@@ -33,9 +28,11 @@ class NewProps<T extends Props> {
 	private makeChild(child: any) {
 		if (child === null || child === undefined) return null
 
-		return typeof child === 'object' && !Array.isArray(child)
-			? child
-			: this.createTextElement(child)
+		if (typeof child === 'object' || Array.isArray(child)) {
+			return child
+		}
+
+		return this.createTextElement(child)
 	}
 
 	private createTextElement(text: string | number) {
