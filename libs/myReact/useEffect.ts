@@ -1,7 +1,14 @@
-type Callback = () => void | (() => void)
+type EffectCallback = () => void | (() => void)
 
-const effects: { deps?: any[] }[] = []
-const effectsArrayAfterRender: { callback: Callback; isRuned?: boolean }[] = []
+type EffectCallbacks = {
+	callback: EffectCallback
+	isRuned?: boolean
+}
+
+const effectsDeps: { deps?: any[] }[] = []
+
+const effectsArrayAfterRender: EffectCallbacks[] = []
+
 let effectsIdx = 0
 
 function isDifferentDeps(prevDeps: any[], currDeps: any[]): boolean {
@@ -9,22 +16,22 @@ function isDifferentDeps(prevDeps: any[], currDeps: any[]): boolean {
 }
 
 export default function useEffect(
-	callback: () => void | (() => void),
+	callback: EffectCallback,
 	deps?: any[],
 ): void {
-	const prevEffect = effects[effectsIdx]
+	const prevEffectDpes = effectsDeps[effectsIdx]
 
-	if (effects.length === effectsIdx) {
-		effects.push({ deps })
+	if (effectsDeps.length === effectsIdx) {
+		effectsDeps.push({ deps })
 		effectsArrayAfterRender.push({ callback })
 	} else if (
 		!deps ||
-		(prevEffect &&
-			Array.isArray(prevEffect.deps) &&
-			isDifferentDeps(prevEffect.deps, deps))
+		(prevEffectDpes &&
+			Array.isArray(prevEffectDpes.deps) &&
+			isDifferentDeps(prevEffectDpes.deps, deps))
 	) {
 		effectsArrayAfterRender.push({ callback })
-		effects[effectsIdx] = { deps }
+		effectsDeps[effectsIdx] = { deps }
 	}
 
 	effectsIdx++
@@ -34,20 +41,10 @@ export default function useEffect(
 export function runEffects(): void {
 	effectsArrayAfterRender.forEach(({ callback, isRuned }) => {
 		if (!isRuned) {
-			// cleanup이 먼저 실행되어야함.
-			// if (typeof callback === 'void') {
-			// 	callback()?.()
-			// }
+			callback()?.()
 			callback()
 			isRuned = true
 		}
 	})
-	effects.length = 0
+	effectsDeps.length = 0
 }
-
-// function callEffect(callback: Callback): void {
-// 	if (typeof callback === 'void') {
-// 		callback()?.()
-// 	}
-// 	callback()
-// }

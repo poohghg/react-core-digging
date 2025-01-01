@@ -6,7 +6,7 @@ import { runEffects } from '@/libs/myReact/useEffect'
 let oldElement: ReactElement | null = null
 let rootContainer: HTMLElement | null = null
 export default function render(element: ReactElement, container: HTMLElement) {
-	diff(container, element, oldElement)
+	diff(container, oldElement, element)
 	oldElement = element
 	rootContainer = container
 	runEffects()
@@ -14,7 +14,7 @@ export default function render(element: ReactElement, container: HTMLElement) {
 
 export function rerender() {
 	const newElement = App()
-	diff(rootContainer!, newElement, oldElement)
+	diff(rootContainer!, oldElement, newElement)
 	oldElement = newElement
 	runEffects()
 }
